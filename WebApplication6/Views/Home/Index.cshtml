@@ -1,0 +1,77 @@
+﻿@using WebApplication6.Models
+@{
+    ViewBag.Title = "Index";
+    var list = (List<Person>)Model;
+}
+<style>
+    #maintable {
+        border: 1px solid #111;
+        padding: 15px;
+        text-align: center;
+        width: 600px;
+        margin: 0 auto;
+    }
+
+        #maintable th {
+            text-align: center;
+            background-color: #aaa;
+            color: #fff;
+        }
+
+        #maintable tr {
+            text-align: center;
+            border-bottom: 1px solid #888;
+        }
+
+            #maintable tr:nth-child(2n) {
+                background-color: #eee;
+            }
+</style>
+
+<h2>Index</h2>
+
+<table id="maintable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Operation</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in list)
+        {
+            <tr>
+                <td>
+                    @item.FirstName @item.LastName
+                </td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    @item.Mobile
+                </td>
+                <td>
+                    <button class="btn btn-success" onclick="callback('@item.FirstName','@item.LastName')">Get Info</button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<button onclick="callback2()" class="btn btn-danger">Redirect</button>
+
+<script>
+    function callback(fname, lname) {
+        alert(fname + ' ' + lname);
+        $.get("/Home/CallBack").done(function (response) {
+            alert(response);
+        });
+    }
+    function callback2() {
+        location.href = "/Home/CallBack";
+    }
+</script>
